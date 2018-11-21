@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nelioalves.cursomc.domain.Categorias;
+import com.nelioalves.cursomc.domain.Categoria;
 
 @RestController
 public class CategoriaResource {
@@ -18,11 +18,11 @@ public class CategoriaResource {
 	}*/
 	
 	@RequestMapping(value = "/categorias", method = RequestMethod.GET)
-	public List<Categorias> listar(){
-		Categorias cat1 = new Categorias(1, "Informática");
-		Categorias cat2 = new Categorias(2, "Escritório");
+	public List<Categoria> listar(){
+		Categoria cat1 = new Categoria(1, "Informática");
+		Categoria cat2 = new Categoria(2, "Escritório");
 		
-		List<Categorias> lista = new ArrayList<Categorias>();
+		List<Categoria> lista = new ArrayList<Categoria>();
 		lista.add(cat1);
 		lista.add(cat2);
 		
