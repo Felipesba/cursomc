@@ -1,8 +1,6 @@
 package com.nelioalves.cursomc;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -10,10 +8,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.nelioalves.cursomc.domain.Categoria;
+import com.nelioalves.cursomc.domain.Cidade;
+import com.nelioalves.cursomc.domain.Estado;
 import com.nelioalves.cursomc.domain.Produto;
 import com.nelioalves.cursomc.repositories.CategoriaRepository;
+import com.nelioalves.cursomc.repositories.CidadeRepository;
+import com.nelioalves.cursomc.repositories.EstadoRepository;
 import com.nelioalves.cursomc.repositories.ProdutoRepository;
-import com.nelioalves.cursomc.services.CategoriaService;
 
 @SpringBootApplication
 public class CursomcApplication implements CommandLineRunner {
@@ -21,10 +22,12 @@ public class CursomcApplication implements CommandLineRunner {
 	// Dependence Injection do Repositorio que será chamado no método  de criação das categorias
 	@Autowired
 	private CategoriaRepository categoriaRepository; 
-	
 	@Autowired
 	private ProdutoRepository produtoRepository; 
-	
+	@Autowired
+	private CidadeRepository cidadeRepository;
+	@Autowired
+	private EstadoRepository estadoRepository; 
 	
 	
 	public static void main(String[] args) {
@@ -48,9 +51,31 @@ public class CursomcApplication implements CommandLineRunner {
 		p2.getCategorias().addAll(Arrays.asList(cat1, cat2));
 		p3.getCategorias().addAll(Arrays.asList(cat1));
 		
-		
+		// Salvar os produtos e Categorias no BD
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
 		produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
+		
+		
+		//Metodo para Criar as Cidades e Estados na tabela do banco H2
+		Estado est1 = new Estado(null, "Minas Geriais");
+		Estado est2 = new Estado(null, "São Paulo");
+		
+		Cidade c1 = new Cidade(null, "Ubêrlandia", est1);
+		Cidade c2 = new Cidade(null, "São Paulo", est2);
+		Cidade c3 = new Cidade(null, "Campinas", est2);
+		
+		est1.getCidades().addAll(Arrays.asList(c1));
+		est2.getCidades().addAll(Arrays.asList(c2, c3));
+		
+		c1.setEstado(est1);
+		c2.setEstado(est2);
+		c3.setEstado(est2);
+		
+		// Salvar os Estados e Cidades no BD
+		estadoRepository.saveAll(Arrays.asList(est1, est2));
+		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
+		
+			
 	}
 	
 	
